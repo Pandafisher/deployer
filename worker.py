@@ -15,9 +15,10 @@ class WorkerManager(object):
 
 
 class Worker(object):
-    def __init__(self, name, args=None, cwd=None, env=None, timeout=300):
+    def __init__(self, name, cmd=None, cwd=None, env=None, timeout=300):
         self.name = name
-        self.args = args
+        self.cmd = cmd
+        self.args = cmd
         self.timeout = timeout
         self.cwd = cwd
         self.env = env
