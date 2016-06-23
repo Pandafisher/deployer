@@ -26,6 +26,7 @@ def workers():
             'poll_output_url': url_for('.worker_poll_output', name=name, _external=True),
             'deploy_url': url_for('.worker_deploy', name=name, _external=True),
             'kill_url': url_for('.worker_kill', name=name, _external=True),
+            'is_running': worker.is_running,
         } for name, worker in worker_manager.items()],
     })
 
