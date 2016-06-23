@@ -56,7 +56,7 @@ class Worker(object):
             self.process = process = subprocess.Popen(self.args, stdout=self.output, stderr=self.output, env=self.env, cwd=self.cwd, shell=True)
         except:
             self.is_running = False
-            return
+            raise
 
         start_time = time.time()
         while True:
