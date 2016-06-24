@@ -22,7 +22,7 @@ def after_request(resp):
 
 @app.route('/')
 def index():
-    return render_template('index.mako', manager=worker_manager)
+    return render_template('index.jinja2', manager=worker_manager)
 
 
 @app.route('/workers')

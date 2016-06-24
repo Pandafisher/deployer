@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>下厨房部署系统</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body id="app" v-cloak>
+  <header class="top-nav">
+    <span class="logo">xiachufang</span>
+  </header>
+  <aside class="side-left">
+    <div class="side-left-inner">
+      <ul class="project-list">
+        <li
+          v-for="worker in workers"
+          :class="{current: current.name === worker.name, running: worker.is_running}"
+          @click="selectWork(worker)">
+          <h2>${worker.name}</h2>
+        </li>
+      </ul>
+    </div>
+  </aside>
+  <section class="main">
+    <h4>${current.name}</h4>
+    <div class="panel">
+      <div class="row align-right">
+        <button class="btn btn-primary"
+          :disabled="current.is_running || current.deployPending"
+          @click="deploy">
+          ${ current.deployPending ? '请求中...' : (current.is_running ? '部署中...' : '部署') }
+        </button>
+        <button class="btn btn-warning"
+          v-if="current.is_running"
+          :disabled="current.killPending"
+          @click="kill">${ current.killPending ?  '停止中...' : '停止' }</button>
+
+      </div>
+      <div class="row">
+        <div id="log-output" class="log">${current.log}</div>
+      </div>
+    </div>
+  </section>
+  <script src="{{url_for('static', filename='js/lib/jquery-3.0.0.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/lib/vue.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/main.js')}}"></script>
+</body>
+</html>
