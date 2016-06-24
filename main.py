@@ -64,6 +64,7 @@ def worker_poll_output(name):
     output = worker.poll_output()
     return ok({
         'output': output,
+        'is_running': worker.is_running,
     })
 
 
