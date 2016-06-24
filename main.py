@@ -13,6 +13,13 @@ worker_manager = WorkerManager(workers)
 app = Flask(__name__)
 
 
+@app.after_request
+def after_request(resp):
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Methods'] = 'GET,OPTIONS,PUT,POST'
+    return resp
+
+
 @app.route('/')
 def index():
     return render_template('index.mako', manager=worker_manager)
