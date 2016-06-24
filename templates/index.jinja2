@@ -25,16 +25,17 @@
     <h4>${current.name}</h4>
     <div class="panel">
       <div class="row align-right">
+        <button class="btn btn-warning"
+          v-if="current.is_running"
+          :disabled="current.killPending"
+          @click="kill">
+          ${ current.killPending ?  '停止中...' : '停止' }
+        </button>
         <button class="btn btn-primary"
           :disabled="current.is_running || current.deployPending"
           @click="deploy">
           ${ current.deployPending ? '请求中...' : (current.is_running ? '部署中...' : '部署') }
         </button>
-        <button class="btn btn-warning"
-          v-if="current.is_running"
-          :disabled="current.killPending"
-          @click="kill">${ current.killPending ?  '停止中...' : '停止' }</button>
-
       </div>
       <div class="row">
         <div id="log-output" class="log">${current.log}</div>

@@ -31,10 +31,12 @@ var app = new Vue({
                 clearInterval(worker.interval)
               } else {
                 if (oldRunning !== worker.is_running || !worker.log) {
-                  clearInterval(worker.interval)
-                  worker.interval = setInterval(function () {
-                    that.output(worker)
-                  }, 2000)
+                  clearInterval(worker.interval);
+                  (function (runningWorker) {
+                    worker.interval = setInterval(function () {
+                      that.output(runningWorker)
+                    }, 2000)
+                  })(worker);
                 }
               }
             }
@@ -51,6 +53,11 @@ var app = new Vue({
     },
     deploy: function () {
       var target = this.getWorkerByName(this.current.name)
+      var project = prompt('请输入您要部署的项目名称 ' + target.name);
+      if (project.name !== target.name) {
+        alert('输入有误！')
+        return;
+      }
       var that = this;
       Vue.set(target, 'deployPending', true)
       $.ajax({
