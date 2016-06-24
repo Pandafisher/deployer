@@ -23,11 +23,29 @@ def workers():
     return ok({
         'workers': [{
             'name': name,
+            'status_url': url_for('.workers_status', name=name, _external=True),
             'poll_output_url': url_for('.worker_poll_output', name=name, _external=True),
             'deploy_url': url_for('.worker_deploy', name=name, _external=True),
             'kill_url': url_for('.worker_kill', name=name, _external=True),
             'is_running': worker.is_running,
         } for name, worker in worker_manager.items()],
+    })
+
+
+@app.route('/workers/<name>/status')
+def workers_status(name):
+    worker = worker_manager.get(name)
+    if not worker:
+        return error(status_code=404)
+
+    return ok({
+        'status': {
+            'name': worker.name,
+            'poll_output_url': url_for('.worker_poll_output', name=name, _external=True),
+            'deploy_url': url_for('.worker_deploy', name=name, _external=True),
+            'kill_url': url_for('.worker_kill', name=name, _external=True),
+            'is_running': worker.is_running,
+        }
     })
 
 
