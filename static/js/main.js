@@ -54,7 +54,7 @@ var app = new Vue({
     deploy: function () {
       var target = this.getWorkerByName(this.current.name)
       var project = prompt('请输入您要部署的项目名称 ' + target.name);
-      if (project.name !== target.name) {
+      if (project !== target.name) {
         alert('输入有误！')
         return;
       }
