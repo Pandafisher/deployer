@@ -35,6 +35,7 @@ def workers():
             'deploy_url': url_for('.worker_deploy', name=name, _external=True),
             'kill_url': url_for('.worker_kill', name=name, _external=True),
             'is_running': worker.is_running,
+            'return_code': worker.return_code,
         } for name, worker in worker_manager.items()],
     })
 
@@ -52,6 +53,7 @@ def workers_status(name):
             'deploy_url': url_for('.worker_deploy', name=name, _external=True),
             'kill_url': url_for('.worker_kill', name=name, _external=True),
             'is_running': worker.is_running,
+            'return_code': worker.return_code,
         }
     })
 
@@ -65,6 +67,7 @@ def worker_poll_output(name):
     return ok({
         'output': output,
         'is_running': worker.is_running,
+        'return_code': worker.return_code,
     })
 
 
