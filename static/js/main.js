@@ -6,13 +6,15 @@ var app = new Vue({
     current: {}
   },
   ready: function () {
-    this.fetch()
+    this.fetch().fail(function () {
+      alert('获取数据失败！')
+    });
     setInterval(this.fetch.bind(this), 5000)
   },
   methods: {
     fetch: function () {
       var that = this
-      $.ajax({
+      return $.ajax({
         method: "GET",
         url: '/workers'
       })
@@ -42,9 +44,6 @@ var app = new Vue({
             }
           }
         }
-      })
-      .fail(function () {
-        if (that.workers.length) alert('获取数据失败！')
       })
     },
     selectWork: function (worker) {

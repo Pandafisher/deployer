@@ -7,7 +7,7 @@
 </head>
 <body id="app" v-cloak>
   <header class="top-nav">
-    <span class="logo">xiachufang</span>
+    <span class="logo">上厨房</span>
   </header>
   <aside class="side-left">
     <div class="side-left-inner">
@@ -31,6 +31,7 @@
           @click="kill">
           ${ current.killPending ?  '停止中...' : '停止' }
         </button>
+        &nbsp;&nbsp;
         <button class="btn btn-primary"
           :disabled="current.is_running || current.deployPending"
           @click="deploy">
