@@ -6,10 +6,11 @@ monkey.patch_all()
 from flask import Flask, render_template, url_for
 from worker import WorkerManager
 from render import ok, error
-from config import workers
+from config import workers, wechat_notifier
+from notifier import Notifier
 
-
-worker_manager = WorkerManager(workers)
+notifier = Notifier(**wechat_notifier)
+worker_manager = WorkerManager(workers, notifier)
 app = Flask(__name__)
 
 
