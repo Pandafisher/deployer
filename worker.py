@@ -68,7 +68,7 @@ class Worker(object):
         self.notify('run %s@%s' % (self.name, datetime.datetime.now()))
 
         try:
-            self.process = process = subprocess.Popen(self.args, stdout=self.output, stderr=self.output, env=self.env, cwd=self.cwd, shell=True)
+            self.process = process = subprocess.Popen(self.args, stdout=self.output, stderr=self.output, env=self.env, cwd=self.cwd, shell='/bin/bash')
         except:
             self.is_running = False
             self.notify('run %s failed@%s' % (self.name, datetime.datetime.now()))
