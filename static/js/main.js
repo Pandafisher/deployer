@@ -20,6 +20,10 @@ var app = new Vue({
       })
       .done(function( result ) {
         var tmpWorkers = result.content.workers
+        // 按 worker.name 字典序排列
+        tmpWorkers.sort(function (a, b) {
+          return a.name.localeCompare(b.name)
+        })
         if (that.workers.length === 0) {
           that.workers = tmpWorkers;
           that.current = that.workers[0]
