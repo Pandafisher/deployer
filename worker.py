@@ -53,7 +53,7 @@ class Worker(object):
     def kill(self):
         if self.is_running:
             self.process.send_signal(self.stop_signal)
-            self.notify('kill %s@%s' % (self.name, datetime.datetime.now()))
+            self.notify('🔫 %s\n@%s' % (self.name, datetime.datetime.now()))
 
     def _run(self, args=None):
         if self.is_running:
@@ -65,13 +65,13 @@ class Worker(object):
 
         self.output = tempfile.NamedTemporaryFile()
         self.is_running = True
-        self.notify('run %s@%s' % (self.name, datetime.datetime.now()))
+        self.notify('🏃 %s\n@%s' % (self.name, datetime.datetime.now()))
 
         try:
             self.process = process = subprocess.Popen(self.args, stdout=self.output, stderr=self.output, env=self.env, cwd=self.cwd, shell='/bin/bash')
         except:
             self.is_running = False
-            self.notify('run %s failed@%s' % (self.name, datetime.datetime.now()))
+            self.notify('❌ %s\n@%s' % (self.name, datetime.datetime.now()))
             raise
 
         start_time = time.time()
@@ -86,6 +86,6 @@ class Worker(object):
 
         self.return_code = process.returncode
         if self.return_code == 0:
-            self.notify('run %s succeeded@%s' % (self.name, datetime.datetime.now()))
+            self.notify('🎉 %s\n@%s' % (self.name, datetime.datetime.now()))
         else:
-            self.notify('run %s failed@%s' % (self.name, datetime.datetime.now()))
+            self.notify('❌ %s\n@%s' % (self.name, datetime.datetime.now()))
