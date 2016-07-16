@@ -1,4 +1,5 @@
 # coding: utf-8
+import os
 import signal
 import gevent
 import subprocess
@@ -56,7 +57,8 @@ class Worker(object):
 
     def kill(self):
         if self.is_running:
-            self.process.send_signal(self.stop_signal)
+            pgrp = os.getpgid(self.process.pid)
+            os.killpg(pgrp, self.stop_signal)
             self.notify('🔫 %s\n@%s' % (self.name, _now()))
 
     def _run(self, args=None):
@@ -72,7 +74,7 @@ class Worker(object):
         self.notify('🏃 %s\n@%s' % (self.name, _now()))
 
         try:
-            self.process = process = subprocess.Popen(self.args, stdout=self.output, stderr=self.output, env=self.env, cwd=self.cwd, shell='/bin/bash')
+            self.process = process = subprocess.Popen(self.args, stdout=self.output, stderr=self.output, env=self.env, cwd=self.cwd, shell='/bin/bash', preexec_fn=os.setsid)
         except:
             self.is_running = False
             self.notify('❌ %s\n@%s' % (self.name, _now()))
