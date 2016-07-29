@@ -40,7 +40,10 @@ class Worker(object):
     def notify(self, content):
         if not self.notifier:
             return
-        self.notifier.notify(content)
+        try:
+            self.notifier.notify(content)
+        except:
+            pass
 
     def poll_output(self):
         if not self.output:
